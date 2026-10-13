@@ -39,7 +39,7 @@ features = [
     "Win32_System_LibraryLoader",
 ]
 
-[target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
+[target.'cfg(target_vendor = "apple")'.dependencies]
 objc2-core-foundation = "0.3"
 objc2-system-configuration = { version = "0.3", default-features = false, features = ["SCNetworkConfiguration"] }
 plist = "1.10"
@@ -49,7 +49,7 @@ objc2 = { version = "0.6", optional = true }
 objc2-core-wlan = { version = "0.3", optional = true }
 objc2-foundation = { version = "0.3", optional = true }
 
-[target.'cfg(target_os = "ios")'.dependencies]
+[target.'cfg(all(target_vendor = "apple", not(target_os = "macos")))'.dependencies]
 dispatch2 = "0.3"
 block2 = "0.6"
 

@@ -1,6 +1,5 @@
 #![cfg(any(
-    target_os = "macos",
-    target_os = "ios",
+    target_vendor = "apple",
     target_os = "freebsd",
     target_os = "openbsd",
     target_os = "netbsd"
@@ -10,7 +9,7 @@
 use libc::{AF_INET, IFNAMSIZ, SOCK_DGRAM, close, ioctl, socket};
 use std::ffi::CString;
 
-#[cfg(any(target_os = "macos", target_os = "ios"))]
+#[cfg(target_vendor = "apple")]
 use macos_subtypes::{ifm_subtype, map_subtype_to_bps};
 
 #[cfg(target_os = "freebsd")]
@@ -100,7 +99,7 @@ struct ifmediareq {
 // extended types. However, some BSD variants (OpenBSD and NetBSD) don't define SIOCGIFXMEDIA.
 // This code uses SIOCGIFXMEDIA where available, otherwise SIOCGIFMEDIA.
 
-#[cfg(any(target_os = "macos", target_os = "ios"))]
+#[cfg(target_vendor = "apple")]
 // #define SIOCGIFXMEDIA   _IOWR('i', 72, struct ifmediareq)
 const SIOCGIFXMEDIA: u64 = 0xc02c6948;
 // #define SIOCGIFMEDIA    _IOWR('i', 56, struct ifmediareq)
@@ -162,7 +161,7 @@ const IFM_HPNA_1: i32 = 17; // HomePNA 1.0 (1Mb/s)
 
 // The following constants are different on every BSD variant and macOS
 
-#[cfg(any(target_os = "macos", target_os = "ios"))]
+#[cfg(target_vendor = "apple")]
 mod macos_subtypes {
     // https://github.com/apple/darwin-xnu/blob/main/bsd/net/if_media.h
     // MacOSX.sdk/usr/include/net/if_media.h

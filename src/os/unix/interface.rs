@@ -189,8 +189,7 @@ fn unix_interfaces_inner(
         }
 
         #[cfg(any(
-            target_os = "macos",
-            target_os = "ios",
+            target_vendor = "apple",
             target_os = "freebsd",
             target_os = "openbsd",
             target_os = "netbsd"
